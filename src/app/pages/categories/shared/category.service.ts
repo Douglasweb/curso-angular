@@ -50,7 +50,7 @@ export class CategoryService {
 
     }
 
-    delete(id : number) : Observable < any > {
+    delete(id? : number) : Observable < any > {
         const url = `${this.apiPath}/${id}`;
 
         return this

@@ -24,26 +24,13 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td><strong>Lazer</strong><br /> <small >Cinema, parque, praia e etc.</small></td>
-            <td>
-                <a [routerLink]="[12, 'edit']" class="btn btn-outline-info btn-sm me-2">Editar</a> 
-                <a ng-click="window.alert('clicked')" class="btn btn-outline-danger btn-sm">Excluir</a> 
+        <tr *ngFor="let category of categories">
+            <td><strong>{{category.name}}</strong><br /> <small >{{category.description}}</small></td>
+            <td >
+                <a [routerLink]="[category.id, 'edit']" class="btn btn-outline-info btn-sm me-2">Editar</a> 
+                <a (click)="deleteCategory(category)" class="btn btn-outline-danger btn-sm">Excluir</a> 
             </td>
         </tr>
-        <tr>
-            <td><strong>Lazer</strong><br /> <small >Cinema, parque, praia e etc.</small></td>
-            <td>
-                <a [routerLink]="[12, 'edit']" class="btn btn-outline-info btn-sm me-2">Editar</a> 
-                <a ng-click="window.alert('clicked')" class="btn btn-outline-danger btn-sm">Excluir</a> 
-            </td>
-        </tr>
-        <tr>
-            <td><strong>Lazer</strong><br /> <small >Cinema, parque, praia e etc.</small></td>
-            <td>
-                <a [routerLink]="[12, 'edit']" class="btn btn-outline-info btn-sm me-2">Editar</a> 
-                <a ng-click="window.alert('clicked')" class="btn btn-outline-danger btn-sm">Excluir</a> 
-            </td>
-        </tr>
+        
     </tbody>
 </table>
