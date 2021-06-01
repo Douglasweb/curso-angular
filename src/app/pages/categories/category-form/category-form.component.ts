@@ -138,7 +138,7 @@ AfterContentChecked {
                 .parse(error._body)
                 .errors; // Ruby retorna desta forma
         } else {
-            this.serverErrorMessages = ['Falaha na comunicacao com o servidor'];
+            this.serverErrorMessages = ['Falha na comunicacao com o servidor! Tente novamente mais tarde.'];
         }
     }
 
