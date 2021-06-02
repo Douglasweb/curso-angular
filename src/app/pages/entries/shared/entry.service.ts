@@ -62,13 +62,13 @@ export class EntryService {
     private jsonDataToEntries(jsonData : any[]) : Entry[] {
         const entries : Entry[] = [];
         jsonData.forEach(element => {
-            entries.push(element as Entry)
+            entries.push(Object.assign(new Entry(), element))
         });
 
         return entries;
     }
 
-    private jsonDataToEntry(jsonData : any) : Entry {return jsonData as Entry}
+    private jsonDataToEntry(jsonData : any) : Entry { return Object.assign(new Entry(), jsonData) }
 
 private handleError(error : any) : Observable < any > {
     console.log('Erro na requisicao => ', error);
