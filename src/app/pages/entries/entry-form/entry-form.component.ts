@@ -151,7 +151,7 @@ AfterContentChecked {
                 ],
                 description: [null],
                 type: [
-                    "revenue",
+                    'expense',
                     [Validators.required]
                 ],
                 amount: [
@@ -163,7 +163,7 @@ AfterContentChecked {
                     [Validators.required]
                 ],
                 paid: [
-                    "true",
+                    true,
                     [Validators.required]
                 ],
                 categoryId: [
