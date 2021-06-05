@@ -4,7 +4,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {Observable, throwError} from 'rxjs';
 
-import {map, catchError} from 'rxjs/operators';
+import {map, catchError, flatMap} from 'rxjs/operators';
+
+import {CategoryService} from "../../categories/shared/category.service";
 
 import {Entry} from './entry.model';
 
@@ -13,7 +15,7 @@ export class EntryService {
 
     private apiPath : string = "api/entries"
 
-    constructor(private http : HttpClient) {}
+    constructor(private http : HttpClient, private CategoryService : CategoryService) {}
 
     getAll() : Observable < Entry[] > {
 
@@ -35,18 +37,37 @@ export class EntryService {
     create(entry : Entry) : Observable < Entry > {
 
         return this
-            .http
-            .post(this.apiPath, entry)
-            .pipe(catchError(this.handleError), map(this.jsonDataToEntry))
+            .CategoryService
+            .getBydId(entry.categoryId)
+            .pipe(flatMap(category => {
+                entry.category = category;
+
+                return this
+                    .http
+                    .post(this.apiPath, entry)
+                    .pipe(catchError(this.handleError), map(this.jsonDataToEntry))
+            }))
+
     }
 
     update(entry : Entry) : Observable < Entry > {
 
         const url = `${this.apiPath}/${entry.id}`;
+        
+
         return this
-            .http
-            .put(url, entry)
-            .pipe(catchError(this.handleError), map(() => entry))
+            .CategoryService
+            .getBydId(entry.categoryId)
+            .pipe(flatMap(category => {
+                entry.category = category;
+                
+             
+
+            return this
+                .http
+                .put(url, entry)
+                .pipe(catchError(this.handleError), map(() => entry))
+        }))
 
     }
 
@@ -68,11 +89,13 @@ export class EntryService {
         return entries;
     }
 
-    private jsonDataToEntry(jsonData : any) : Entry { return Object.assign(new Entry(), jsonData) }
+    private jsonDataToEntry(jsonData : any) : Entry {
+        return Object.assign(new Entry(), jsonData)
+    }
 
-private handleError(error : any) : Observable < any > {
-    console.log('Erro na requisicao => ', error);
-    return throwError(error);
-}
+    private handleError(error : any) : Observable < any > {
+        console.log('Erro na requisicao => ', error);
+        return throwError(error);
+    }
 
 }
