@@ -1,20 +1,32 @@
-import {BaseResourceModel} from "../models/base-resource.model";
-import {HttpClient} from '@angular/common/http';
-import {Injector} from "@angular/core";
-import {Observable, throwError} from 'rxjs';
-import {map, catchError} from 'rxjs/operators';
+import {
+    BaseResourceModel
+} from "../models/base-resource.model";
+import {
+    HttpClient
+} from '@angular/common/http';
+import {
+    Injector
+} from "@angular/core";
+import {
+    Observable,
+    throwError
+} from 'rxjs';
+import {
+    map,
+    catchError
+} from 'rxjs/operators';
 
-export abstract class BaseResourceService < T extends BaseResourceModel > {
+export abstract class BaseResourceService<T extends BaseResourceModel> {
 
-    protected http : HttpClient;
+    protected http: HttpClient;
 
-    constructor(protected apiPath : string, protected injector : Injector, protected jsonDatatoResourceFn : (jsonData : any) => T) {
+    constructor(protected apiPath: string, protected injector: Injector, protected jsonDatatoResourceFn: (jsonData: any) => T) {
 
         this.http = injector.get(HttpClient);
 
     }
 
-    getAll() : Observable < T[] > {
+    getAll(): Observable<T[]> {
 
         return this
             .http
@@ -22,7 +34,7 @@ export abstract class BaseResourceService < T extends BaseResourceModel > {
             .pipe(map(this.jsonDataToResources.bind(this)), catchError(this.handleError))
     }
 
-    getBydId(id : number) : Observable < T > {
+    getBydId(id: number): Observable<T> {
         const url = `${this.apiPath}/${id}`;
 
         return this
@@ -31,7 +43,7 @@ export abstract class BaseResourceService < T extends BaseResourceModel > {
             .pipe(map(this.jsonDataToResource.bind(this)), catchError(this.handleError))
     }
 
-    create(resource : T) : Observable < T > {
+    create(resource: T): Observable<T> {
 
         return this
             .http
@@ -39,7 +51,7 @@ export abstract class BaseResourceService < T extends BaseResourceModel > {
             .pipe(map(this.jsonDataToResource.bind(this)), catchError(this.handleError))
     }
 
-    update(resource : T) : Observable < T > {
+    update(resource: T): Observable<T> {
 
         const url = `${this.apiPath}/${resource.id}`;
         return this
@@ -49,7 +61,7 @@ export abstract class BaseResourceService < T extends BaseResourceModel > {
 
     }
 
-    delete(id : number) : Observable < any > {
+    delete(id: number): Observable<any> {
         const url = `${this.apiPath}/${id}`;
 
         return this
@@ -60,8 +72,8 @@ export abstract class BaseResourceService < T extends BaseResourceModel > {
 
     ///PROTECTED METHODS
 
-    protected jsonDataToResources(jsonData : any[]) : T[] {
-        const resources : T[] = [];
+    protected jsonDataToResources(jsonData: any[]): T[] {
+        const resources: T[] = [];
         jsonData.forEach(element => {
             resources.push(this.jsonDatatoResourceFn(element))
         });
@@ -69,11 +81,11 @@ export abstract class BaseResourceService < T extends BaseResourceModel > {
         return resources;
     }
 
-    protected jsonDataToResource(jsonData : any) : T {
+    protected jsonDataToResource(jsonData: any): T {
         return this.jsonDatatoResourceFn(jsonData);
     }
 
-    protected handleError(error : any) : Observable < any > {
+    protected handleError(error: any): Observable<any> {
         console.log('Erro na requisicao => ', error);
         return throwError(error);
     }
