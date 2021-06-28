@@ -5,7 +5,8 @@ import { Category } from './../../categories/shared/category.model';
 import { CategoryService } from './../../categories/shared/category.service';
 
 import { EntryService } from '../shared/entry.service';
-import { Entry } from '../shared/entry.model'
+import { Entry } from '../shared/entry.model';
+
 
 import { BaseResourceFormComponent } from "../../../shared/components/base-resource-form/base-resource-form.component";
 @Component({ selector: 'app-entry-form', templateUrl: './entry-form.component.html', styleUrls: ['./entry-form.component.css'] })
