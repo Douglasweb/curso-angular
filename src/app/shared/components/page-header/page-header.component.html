@@ -1,22 +1,10 @@
-<!-- <div class="row mb-4">
-    <div class="col-md">
-        <h1 class="h2 border-start ps-2">
-            Lançamentos
-        </h1>
-    </div>
-    <div class="col-md">
-        <a routerLink="new" class="btn btn-success btn-secondary float-end"> + Novo Lançamento</a>
-    </div>
-</div> -->
-
-
 <div class="row mb-4">
     <div class="col-md-9">
         <h1 class="h2 border-start ps-2">
             {{pageTitle}}
         </h1>
     </div>
-    <div class="col-md-3">
+    <div *ngIf="showButton" class="col-md-3">
         <a [routerLink]="buttonLink" class="btn float-end" [ngClass]="buttonClass"> {{buttonText}}</a>
     </div>
 </div>
